@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+
+import 'addTaskScreen.dart';
+import 'theme.dart';
+import 'tasksController.dart';
 
 class Homescreen extends StatelessWidget {
+  final TasksController tasksController = Get.put(TasksController());
+
   @override
   Widget build(BuildContext context) {
     return Material(
         type: MaterialType.transparency,
         child: Container(
-          decoration: BoxDecoration(color: const Color(0xFF8A78E4)),
+          decoration: BoxDecoration(color: AppColors.purple),
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             headerImage,
             title,
@@ -55,11 +62,11 @@ class Homescreen extends StatelessWidget {
   final getStartedButton = Padding(
       padding: EdgeInsets.only(top: 100),
       child: RaisedButton(
-        onPressed: () {},
+        onPressed: () => Get.off(AddTaskScreen()),
         padding:
             const EdgeInsets.only(top: 15, bottom: 15, left: 40, right: 40),
         textColor: Colors.black87,
-        color: const Color(0xFFFDD252),
+        color: AppColors.yellow,
         child: Text(
           "Get started",
           style: TextStyle(fontSize: 24),
