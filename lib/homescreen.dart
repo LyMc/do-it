@@ -32,7 +32,7 @@ class Homescreen extends StatelessWidget {
         'Beat Procrastination Today',
         textAlign: TextAlign.center,
         textDirection: TextDirection.ltr,
-        style: TextStyle(fontSize: 32, color: Colors.black87),
+        style: TextStyle(fontSize: 32, color: Colors.white),
       ));
 
   final quote = Padding(
@@ -43,11 +43,14 @@ class Homescreen extends StatelessWidget {
         textAlign: TextAlign.center,
         style: TextStyle(
           fontSize: 18,
-          color: Colors.black87,
+          color: Colors.white,
         ),
       ));
 
-  final quoteAuthor = Text('James A. Michener');
+  final quoteAuthor = Text('James A. Michener',
+      style: TextStyle(
+        color: Colors.white,
+      ));
 
   final getStartedButton = Padding(
       padding: EdgeInsets.only(top: 100),
@@ -55,7 +58,7 @@ class Homescreen extends StatelessWidget {
         onPressed: () {},
         padding:
             const EdgeInsets.only(top: 15, bottom: 15, left: 40, right: 40),
-        textColor: Colors.white,
+        textColor: Colors.black87,
         color: const Color(0xFFFDD252),
         child: Text(
           "Get started",
