@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'addTaskScreen.dart';
 import 'theme.dart';
 import 'tasksController.dart';
+import 'shareable/primaryAction.dart';
 
 class Homescreen extends StatelessWidget {
   final TasksController tasksController = Get.put(TasksController());
@@ -15,13 +16,17 @@ class Homescreen extends StatelessWidget {
         type: MaterialType.transparency,
         child: Container(
           decoration: BoxDecoration(color: AppColors.purple),
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            headerImage,
-            title,
-            quote,
-            quoteAuthor,
-            getStartedButton
-          ]),
+          padding: const EdgeInsets.symmetric(horizontal: 25),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                headerImage,
+                title,
+                quote,
+                quoteAuthor,
+                getStartedButton
+              ]),
         ));
   }
 
@@ -34,7 +39,7 @@ class Homescreen extends StatelessWidget {
   );
 
   final title = Padding(
-      padding: const EdgeInsets.only(left: 40, right: 40, bottom: 40),
+      padding: const EdgeInsets.only(left: 10, right: 10, bottom: 40),
       child: Text(
         'Beat Procrastination Today',
         textAlign: TextAlign.center,
@@ -43,7 +48,7 @@ class Homescreen extends StatelessWidget {
       ));
 
   final quote = Padding(
-      padding: const EdgeInsets.only(left: 40, right: 40),
+      padding: const EdgeInsets.only(left: 10, right: 10),
       child: Text(
         '"Don\'t put off for tomorrow what you can do today because if you enjoy it today, you can do it again tomorrow."',
         textDirection: TextDirection.ltr,
@@ -55,21 +60,13 @@ class Homescreen extends StatelessWidget {
       ));
 
   final quoteAuthor = Text('James A. Michener',
+      textAlign: TextAlign.center,
       style: TextStyle(
         color: Colors.white,
       ));
 
   final getStartedButton = Padding(
       padding: EdgeInsets.only(top: 100),
-      child: RaisedButton(
-        onPressed: () => Get.off(AddTaskScreen()),
-        padding:
-            const EdgeInsets.only(top: 15, bottom: 15, left: 40, right: 40),
-        textColor: Colors.black87,
-        color: AppColors.yellow,
-        child: Text(
-          "Get started",
-          style: TextStyle(fontSize: 24),
-        ),
-      ));
+      child: PrimaryAction(
+          text: "Get started", onPressed: () => Get.to(AddTaskScreen())));
 }
