@@ -38,6 +38,9 @@ dependencies:
   #Unique ID generator
   uuid: 2.2.2
 
+  # Material design icons
+  material_design_icons_flutter: 4.0.5755
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
