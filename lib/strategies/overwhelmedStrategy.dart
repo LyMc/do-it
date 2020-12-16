@@ -1,3 +1,4 @@
+import 'package:do_it/strategies/overwhelmed/list.dart';
 import 'package:do_it/successScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -52,7 +53,9 @@ class OverwhelmedStrategy extends StatelessWidget {
 
   final learnMoreButton = Padding(
       padding: EdgeInsets.only(top: 20),
-      child: PrimaryAction(text: 'Learn more', onPressed: () => {}));
+      child: PrimaryAction(
+          text: 'Learn more',
+          onPressed: () => Get.to(OverwhelmedListScreen())));
 
   Container get currentTask {
     return Container(
