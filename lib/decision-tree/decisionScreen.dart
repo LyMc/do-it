@@ -1,10 +1,10 @@
-import 'package:do_it/shareable/well.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../theme.dart';
 import '../tasksController.dart';
 import '../shareable/screenTitle.dart';
+import '../shareable/yourTaskWell.dart';
 
 class DecisionScreen extends StatelessWidget {
   final TasksController _tasksController = Get.find();
@@ -67,10 +67,6 @@ class DecisionScreen extends StatelessWidget {
   Container get currentTask {
     return Container(
         margin: const EdgeInsets.only(bottom: 30),
-        child: Well(
-            child: Text(
-          "${this._tasksController.currentTask.name}",
-          style: TextStyle(color: Colors.white),
-        )));
+        child: YourTaskWell(task: _tasksController.currentTask));
   }
 }

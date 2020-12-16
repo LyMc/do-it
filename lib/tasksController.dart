@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:uuid/uuid.dart';
+import 'models.dart';
 
 class TasksController extends GetxController {
   var tasks = <Task>[].obs;
@@ -14,13 +14,4 @@ class TasksController extends GetxController {
   setCurrentTask(Task task) {
     currentTask = task;
   }
-}
-
-class Task {
-  String name;
-  var id;
-
-  Task(name)
-      : name = name,
-        id = Uuid();
 }

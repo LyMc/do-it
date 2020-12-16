@@ -8,7 +8,8 @@ class Well extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.all(30),
+        padding:
+            const EdgeInsets.only(left: 25, right: 25, top: 20, bottom: 20),
         decoration: new BoxDecoration(
           shape: BoxShape.rectangle,
           borderRadius: BorderRadius.circular(5),
