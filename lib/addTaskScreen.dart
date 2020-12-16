@@ -60,7 +60,7 @@ class AddTaskScreen extends StatelessWidget {
                                         // Validate will return true if the form is valid, or false if
                                         // the form is invalid.
                                         if (_formKey.currentState.validate()) {
-                                          _tasksController.addTask(
+                                          _tasksController.createTask(
                                               _textEditingController.text);
                                           Get.to(HateTaskDecisionScreen());
                                         }

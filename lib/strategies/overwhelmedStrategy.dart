@@ -47,7 +47,7 @@ class OverwhelmedStrategy extends StatelessWidget {
         child: PrimaryAction(
             text: 'Mark as resolved [TEST]',
             onPressed: () =>
-                Get.to(SuccessScreen(task: _tasksController.currentTask))));
+                Get.to(SuccessScreen(task: _tasksController.newTask))));
   }
 
   final learnMoreButton = Padding(
@@ -57,6 +57,6 @@ class OverwhelmedStrategy extends StatelessWidget {
   Container get currentTask {
     return Container(
         margin: const EdgeInsets.only(bottom: 20, top: 15),
-        child: YourTaskWell(task: _tasksController.currentTask));
+        child: YourTaskWell(task: _tasksController.newTask));
   }
 }

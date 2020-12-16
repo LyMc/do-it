@@ -67,6 +67,6 @@ class DecisionScreen extends StatelessWidget {
   Container get currentTask {
     return Container(
         margin: const EdgeInsets.only(bottom: 30),
-        child: YourTaskWell(task: _tasksController.currentTask));
+        child: YourTaskWell(task: _tasksController.newTask));
   }
 }
