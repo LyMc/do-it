@@ -3,15 +3,34 @@ import 'models.dart';
 
 class TasksController extends GetxController {
   var tasks = <Task>[].obs;
-  Task currentTask;
+  Task newTask;
 
-  addTask(String name) {
-    var task = new Task(name);
-    tasks.add(task);
-    setCurrentTask(task);
+  createTask(String name) {
+    newTask = new Task(name);
   }
 
-  setCurrentTask(Task task) {
-    currentTask = task;
+  Task addTask(Strategy strategy) {
+    Task task;
+    switch (strategy) {
+      case Strategy.confidence:
+        task = new ConfidenceTask(newTask.name);
+        break;
+      case Strategy.despise:
+        task = new DespiseTask(newTask.name);
+        break;
+      case Strategy.distracted:
+        task = new DistractedTask(newTask.name);
+        break;
+      case Strategy.overwhelmed:
+        task = new DistractedTask(newTask.name);
+        break;
+      case Strategy.creativityBlocked:
+        task = new CreativityBlockedTask(newTask.name);
+        break;
+    }
+
+    tasks.add(task);
+    newTask = null;
+    return task;
   }
 }
