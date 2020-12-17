@@ -3,7 +3,6 @@ import 'package:do_it/successScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../theme.dart';
 import '../tasksController.dart';
 import '../shareable/primaryAction.dart';
 import '../shareable/screenTitle.dart';
@@ -15,20 +14,21 @@ class OverwhelmedStrategy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-        type: MaterialType.transparency,
-        child: Container(
-            decoration: BoxDecoration(color: AppColors.purple),
-            padding: const EdgeInsets.all(25),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  imageHeader,
-                  ScreenTitle(title: 'Overwhelmed'),
-                  description,
-                  currentTask,
-                  markAsResolvedButton,
-                  learnMoreButton
-                ])));
+      child: Container(
+        padding: const EdgeInsets.all(25),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            imageHeader,
+            ScreenTitle(title: 'Overwhelmed'),
+            description,
+            currentTask,
+            markAsResolvedButton,
+            learnMoreButton
+          ],
+        ),
+      ),
+    );
   }
 
   final description = Text(

@@ -79,3 +79,11 @@ class Step {
     this._isCompleted.value = value;
   }
 }
+
+class SubTask {
+  var name = '';
+  var isCompleted = false;
+  var isLastAdded = true;
+  // var deadline; // date?
+  var subtasks = <SubTask>[];
+}

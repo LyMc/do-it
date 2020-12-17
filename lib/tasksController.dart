@@ -34,3 +34,18 @@ class TasksController extends GetxController {
     return task;
   }
 }
+
+class SubTaskController extends GetxController {
+  var subTasks = <SubTask>[].obs;
+  SubTask lastAdded;
+
+  add() {
+    lastAdded?.isLastAdded = false;
+    lastAdded = SubTask();
+    subTasks.add(lastAdded);
+  }
+
+  remove(subTask) {
+    subTasks.remove(subTask);
+  }
+}
