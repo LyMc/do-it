@@ -27,7 +27,9 @@ class DecisionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: Text("Decision Tree"),
+        ),
         body: Container(
             decoration: BoxDecoration(color: AppColors.purple),
             padding: const EdgeInsets.only(left: 20, right: 20),

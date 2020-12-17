@@ -1,11 +1,13 @@
+import 'package:do_it/homescreen.dart';
+import 'package:do_it/successScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../addTaskScreen.dart';
-import '../theme.dart';
 import '../models.dart';
 import '../shareable/screenTitle.dart';
 import '../shareable/yourTaskWell.dart';
+import 'steps/stepList.dart';
 
 class ConfidenceStrategy extends StatelessWidget {
   final ConfidenceTask task;
@@ -14,70 +16,90 @@ class ConfidenceStrategy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Container(
-        decoration: BoxDecoration(color: AppColors.purple),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Confidence Strategy"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.home),
+            tooltip: 'Go Home',
+            onPressed: () {
+              Get.to(Homescreen());
+            },
+          )
+        ],
+      ),
+      body: Container(
         padding: const EdgeInsets.only(left: 25, right: 25),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 400,
-                height: 250,
-                margin: const EdgeInsets.only(top: 60),
-                child: Image(
-                  image: AssetImage('assets/lackOfConfidence.png'),
-                ),
-              ),
+              headerImage,
               ScreenTitle(title: 'Lack of Confidence'),
               Text(
-                  "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. ",
-                  style: TextStyle(color: Colors.white)),
-              Container(
-                margin: const EdgeInsets.only(bottom: 20, top: 15),
-                child: YourTaskWell(task: this.task),
+                  "You lack confidence in your abilities that stops you in completing your task. Follow the steps we provide to boost your confidence. You can do it!"),
+              currentTask,
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Text(
+                  "Steps",
+                  style: TextStyle(fontSize: 20),
+                ),
               ),
-              Text(
-                "Steps",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-              ListView.builder(
-                // separatorBuilder: (context, index) =>
-                //     Divider(color: Colors.black54),
-                itemCount: task.steps.length,
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return Card(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 15),
-                      child: Obx(
-                        () => CheckboxListTile(
-                          checkColor: Theme.of(context).cardColor,
-                          secondary: Icon(Icons.wb_sunny),
-                          value: task.steps[index].isCompleted,
-                          onChanged: (bool value) {
-                            task.steps[index].toggleCompleted(value);
-                          },
-                          title: Padding(
-                              padding: const EdgeInsets.only(bottom: 10),
-                              child: Text("${task.steps[index].title}")),
-                          subtitle: Text("${task.steps[index].description}"),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-              FlatButton(
-                onPressed: () => Get.to(AddTaskScreen()),
-                child: Text("Add another task"),
-              )
+              StepList(steps: this.task.steps)
             ],
           ),
         ),
       ),
+      bottomNavigationBar: BottomAppBar(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 15),
+                child: OutlineButton(
+                  onPressed: () => Get.to(AddTaskScreen()),
+                  child: Text("Add another task"),
+                ),
+              ),
+              Obx(
+                () => RaisedButton(
+                  onPressed: _hasUncompletedSteps ? null : _markAsResolved,
+                  child: Text("Mark as resolved"),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  bool get _hasUncompletedSteps {
+    return this.task.steps.any((step) => !step.isCompleted);
+  }
+
+  void _markAsResolved() {
+    this.task.markAsResolved();
+    Get.off(SuccessScreen(task: this.task));
+  }
+
+  final headerImage = Container(
+    width: 400,
+    height: 250,
+    margin: const EdgeInsets.only(top: 40),
+    child: Image(
+      image: AssetImage('assets/lackOfConfidence.png'),
+    ),
+  );
+
+  Widget get currentTask {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 20, top: 15),
+      child: YourTaskWell(task: this.task),
     );
   }
 }

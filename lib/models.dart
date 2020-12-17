@@ -5,11 +5,19 @@ class Task {
   String name;
   var id;
   Strategy strategy;
-  var isFinished = false;
+  var _isCompleted = false.obs;
 
   Task(name)
       : name = name,
         id = Uuid();
+
+  get isCompleted {
+    return this._isCompleted.value;
+  }
+
+  markAsResolved() {
+    this._isCompleted.value = true;
+  }
 }
 
 class DespiseTask extends Task {
@@ -23,15 +31,15 @@ class ConfidenceTask extends Task {
     Step(
         title: 'Build skill set',
         description:
-            'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book'),
+            'Write down the skills you need to complete this task. Take action into learning these skills and evaluate yourself. You can ask another person mastering these skills to help you.'),
     Step(
         title: 'Counter negative self-talk',
         description:
-            'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book'),
+            'Write down all your inner critic’s criticisms on one side of a piece of paper. Then write down a more realistic and compassionate appraisal of yourself on the other side. Challenging your inner critic helps stop the shame spiral that feeds into low self-esteem.'),
     Step(
-        title: 'Start easy',
+        title: 'Acknolwdge small victories',
         description:
-            'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book')
+            'Always remember to acknowledge how far you’ve come. Write down your small victories and get in the habit of celebrating each little win.')
   ];
   ConfidenceTask(String name) : super(name) {
     this.strategy = Strategy.confidence;

@@ -35,6 +35,7 @@ class AddTaskScreen extends StatelessWidget {
                               TextFormField(
                                 controller: _textEditingController,
                                 style: TextStyle(color: Colors.white),
+                                autofocus: true,
                                 decoration: const InputDecoration(
                                   hintText: 'Enter your task',
                                   hintStyle: TextStyle(color: Colors.white),
