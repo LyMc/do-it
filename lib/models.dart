@@ -31,7 +31,7 @@ class ConfidenceTask extends Task {
     Step(
         title: 'Build skill set',
         description:
-            'Write down the skills you need to complete this task. Take action into learning these skills and evaluate yourself. You can ask another person mastering these skills to help you.'),
+            'Write down the skills you need to complete this task. Acquire these skills and evaluate yourself. You can ask another person who masters these skills to help you.'),
     Step(
         title: 'Counter negative self-talk',
         description:

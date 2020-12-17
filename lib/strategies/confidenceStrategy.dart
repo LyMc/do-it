@@ -38,7 +38,7 @@ class ConfidenceStrategy extends StatelessWidget {
               headerImage,
               ScreenTitle(title: 'Lack of Confidence'),
               Text(
-                  "You lack confidence in your abilities that stops you in completing your task. Follow the steps we provide to boost your confidence. You can do it!"),
+                  "You lack confidence in your abilities, and this stops you from completing your task. Follow the steps we provide to boost your confidence. You can do it!"),
               currentTask,
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
