@@ -1,15 +1,17 @@
+import 'package:do_it/models.dart';
 import 'package:do_it/strategies/overwhelmed/list.dart';
 import 'package:do_it/successScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../tasksController.dart';
 import '../shareable/primaryAction.dart';
 import '../shareable/screenTitle.dart';
 import '../shareable/yourTaskWell.dart';
 
 class OverwhelmedStrategy extends StatelessWidget {
-  final TasksController _tasksController = Get.find();
+  final OverwhelmedTask task;
+
+  OverwhelmedStrategy({@required this.task});
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +49,7 @@ class OverwhelmedStrategy extends StatelessWidget {
         padding: EdgeInsets.only(top: 20),
         child: PrimaryAction(
             text: 'Mark as resolved [TEST]',
-            onPressed: () =>
-                Get.to(SuccessScreen(task: _tasksController.newTask))));
+            onPressed: () => Get.to(SuccessScreen(task: task))));
   }
 
   final learnMoreButton = Padding(
@@ -60,6 +61,6 @@ class OverwhelmedStrategy extends StatelessWidget {
   Container get currentTask {
     return Container(
         margin: const EdgeInsets.only(bottom: 20, top: 15),
-        child: YourTaskWell(task: _tasksController.newTask));
+        child: YourTaskWell(task: task));
   }
 }

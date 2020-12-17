@@ -22,7 +22,7 @@ class TasksController extends GetxController {
         task = new DistractedTask(newTask.name);
         break;
       case Strategy.overwhelmed:
-        task = new DistractedTask(newTask.name);
+        task = new OverwhelmedTask(newTask.name);
         break;
       case Strategy.creativityBlocked:
         task = new CreativityBlockedTask(newTask.name);
