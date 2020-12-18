@@ -57,11 +57,10 @@ class OverwhelmedStrategy extends StatelessWidget {
                           child: ListTile(
                             title: TextFormField(
                               initialValue: subTask.value.name.value,
+                              focusNode: subTask.value.focusNode,
                               onChanged: (value) =>
                                   subTask.value.name.value = value,
-                              autofocus: subTasksController.subTasks.length >
-                                      1 &&
-                                  subTasksController.subTasks.last == subTask,
+                              autofocus: true,
                               decoration: const InputDecoration(
                                 hintText: 'Enter a sub-task',
                                 enabledBorder: InputBorder.none,
@@ -90,6 +89,10 @@ class OverwhelmedStrategy extends StatelessWidget {
                         ),
                         onPressed: () {
                           subTasksController.add();
+                          subTasksController.subTasks
+                              .last()
+                              .focusNode
+                              .requestFocus();
                         },
                       )
                     : SizedBox(),
