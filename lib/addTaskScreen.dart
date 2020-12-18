@@ -16,59 +16,67 @@ class AddTaskScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-        type: MaterialType.transparency,
-        child: Container(
-            decoration: BoxDecoration(color: AppColors.purple),
-            child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(color: AppColors.purple),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                headerImage,
+                ScreenTitle(title: 'What is your task?'),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      headerImage,
-                      ScreenTitle(title: "What is your task?"),
-                      Form(
-                          key: _formKey,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              TextFormField(
-                                controller: _textEditingController,
-                                style: TextStyle(color: Colors.white),
-                                autofocus: true,
-                                decoration: const InputDecoration(
-                                  hintText: 'Enter your task',
-                                  hintStyle: TextStyle(color: Colors.white),
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.white),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.cyan),
-                                  ),
-                                ),
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return 'Please enter your task';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              Padding(
-                                  padding: EdgeInsets.only(top: 100),
-                                  child: PrimaryAction(
-                                      text: "Next",
-                                      onPressed: () {
-                                        // Validate will return true if the form is valid, or false if
-                                        // the form is invalid.
-                                        if (_formKey.currentState.validate()) {
-                                          _tasksController.createTask(
-                                              _textEditingController.text);
-                                          Get.to(HateTaskDecisionScreen());
-                                        }
-                                      }))
-                            ],
-                          ))
-                    ]))));
+                      TextFormField(
+                        controller: _textEditingController,
+                        style: TextStyle(color: Colors.white),
+                        autofocus: true,
+                        decoration: const InputDecoration(
+                          hintText: 'Enter your task',
+                          hintStyle: TextStyle(color: Colors.white),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.cyan),
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter your task';
+                          }
+                          return null;
+                        },
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 100),
+                        child: PrimaryAction(
+                          text: "Next",
+                          onPressed: () {
+                            // Validate will return true if the form is valid, or false if
+                            // the form is invalid.
+                            if (_formKey.currentState.validate()) {
+                              _tasksController
+                                  .createTask(_textEditingController.text);
+                              Get.to(HateTaskDecisionScreen());
+                            }
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   final headerImage = Container(

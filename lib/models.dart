@@ -89,9 +89,8 @@ class Step {
 }
 
 class SubTask {
-  var name = '';
-  var isCompleted = false;
-  var isLastAdded = true;
+  var name = ''.obs;
+  var isCompleted = false.obs;
   // var deadline; // date?
-  var subtasks = <SubTask>[];
+  var subTasks = <Rx<SubTask>>[].obs;
 }

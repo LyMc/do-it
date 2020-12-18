@@ -36,16 +36,25 @@ class TasksController extends GetxController {
 }
 
 class SubTaskController extends GetxController {
-  var subTasks = <SubTask>[].obs;
-  SubTask lastAdded;
+  var subTasks = <Rx<SubTask>>[].obs;
+
+  SubTaskController() {
+    add();
+  }
 
   add() {
-    lastAdded?.isLastAdded = false;
-    lastAdded = SubTask();
-    subTasks.add(lastAdded);
+    subTasks.add(SubTask().obs);
   }
 
   remove(subTask) {
     subTasks.remove(subTask);
+  }
+
+  subTaskAdd(Rx<SubTask> subTask) {
+    subTask.value.subTasks.add(SubTask().obs);
+  }
+
+  subTaskRemove(Rx<SubTask> subTaskParent, subTask) {
+    subTaskParent.value.subTasks.remove(subTask);
   }
 }

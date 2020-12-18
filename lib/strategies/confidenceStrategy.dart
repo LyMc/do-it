@@ -1,4 +1,4 @@
-import 'package:do_it/homescreen.dart';
+import 'package:do_it/shareable/appBar.dart';
 import 'package:do_it/successScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,18 +17,7 @@ class ConfidenceStrategy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Confidence Strategy"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.home),
-            tooltip: 'Go Home',
-            onPressed: () {
-              Get.to(Homescreen());
-            },
-          )
-        ],
-      ),
+      appBar: getAppBar('Confidence Strategy'),
       body: Container(
         padding: const EdgeInsets.only(left: 25, right: 25),
         child: SingleChildScrollView(

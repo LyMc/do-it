@@ -1,66 +1,118 @@
 import 'package:do_it/models.dart';
-import 'package:do_it/strategies/overwhelmed/list.dart';
-import 'package:do_it/successScreen.dart';
+import 'package:do_it/shareable/appBar.dart';
+import 'package:do_it/shareable/screenTitle.dart';
+import 'package:do_it/shareable/yourTaskWell.dart';
+import 'package:do_it/strategies/overwhelmedStrategyStep2.dart';
+import 'package:do_it/tasksController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../shareable/primaryAction.dart';
-import '../shareable/screenTitle.dart';
-import '../shareable/yourTaskWell.dart';
-
 class OverwhelmedStrategy extends StatelessWidget {
   final OverwhelmedTask task;
+  final subTasksController = Get.put(SubTaskController());
 
   OverwhelmedStrategy({@required this.task});
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Container(
-        padding: const EdgeInsets.all(25),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+    return Scaffold(
+      appBar: getAppBar('Overwhelmed Strategy'),
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                width: 400,
+                height: 300,
+                child: Image(image: AssetImage('assets/overwhelmed.png')),
+              ),
+              ScreenTitle(title: 'Overwhelmed'),
+              Text(
+                "You feel overwhelmed, let's brake down the job to complete this task:",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20),
+              ),
+              SizedBox(height: 15),
+              YourTaskWell(task: task),
+              SizedBox(height: 50),
+              Text(
+                'List how you\'ll know you\'re done',
+                style: TextStyle(fontSize: 20),
+              ),
+              SizedBox(height: 20),
+              Obx(
+                () => Column(
+                  children: [
+                    for (var subTask in subTasksController.subTasks)
+                      Dismissible(
+                        key: Key(subTask.hashCode.toString()),
+                        onDismissed: (direction) {
+                          subTasksController.remove(subTask);
+                        },
+                        background: Card(color: Colors.red),
+                        child: Card(
+                          color: Colors.transparent,
+                          child: ListTile(
+                            title: TextFormField(
+                              initialValue: subTask.value.name.value,
+                              onChanged: (value) =>
+                                  subTask.value.name.value = value,
+                              autofocus: subTasksController.subTasks.length >
+                                      1 &&
+                                  subTasksController.subTasks.last == subTask,
+                              decoration: const InputDecoration(
+                                hintText: 'Enter a sub-task',
+                                enabledBorder: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                              ),
+                            ),
+                            // leading: Checkbox(
+                            //   value: true,
+                            //   onChanged: print,
+                            //   checkColor: Theme.of(context).cardColor,
+                            // ),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              Obx(
+                () => subTasksController.subTasks.length == 0 ||
+                        subTasksController
+                            .subTasks.last.value.name.value.isNotEmpty
+                    ? TextButton(
+                        child: Text(
+                          '+ Add new item',
+                          style: TextStyle(color: Colors.white54),
+                        ),
+                        onPressed: () {
+                          subTasksController.add();
+                        },
+                      )
+                    : SizedBox(),
+              ),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: ButtonBar(
+          buttonMinWidth: 200.0, // half width
           children: [
-            imageHeader,
-            ScreenTitle(title: 'Overwhelmed'),
-            description,
-            currentTask,
-            markAsResolvedButton,
-            learnMoreButton
+            OutlineButton(
+              child: Text('Previous'),
+              onPressed: () => Get.back(),
+            ),
+            RaisedButton(
+              child: Text('Next'),
+              onPressed: () => Get.to(OverwhelmedStrategyStep2(task: task)),
+            ),
           ],
         ),
       ),
     );
-  }
-
-  final description = Text(
-      "You feel overwhelmed, let's brake down the job to complete this task:",
-      textAlign: TextAlign.center,
-      style: TextStyle(color: Colors.white, fontSize: 20));
-
-  final imageHeader = Container(
-      width: 400,
-      height: 300,
-      margin: const EdgeInsets.only(top: 60, bottom: 20),
-      child: Image(image: AssetImage('assets/overwhelmed.png')));
-
-  Padding get markAsResolvedButton {
-    return Padding(
-        padding: EdgeInsets.only(top: 20),
-        child: PrimaryAction(
-            text: 'Mark as resolved [TEST]',
-            onPressed: () => Get.to(SuccessScreen(task: task))));
-  }
-
-  final learnMoreButton = Padding(
-      padding: EdgeInsets.only(top: 20),
-      child: PrimaryAction(
-          text: 'Learn more',
-          onPressed: () => Get.to(OverwhelmedListScreen())));
-
-  Container get currentTask {
-    return Container(
-        margin: const EdgeInsets.only(bottom: 20, top: 15),
-        child: YourTaskWell(task: task));
   }
 }

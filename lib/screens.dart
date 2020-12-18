@@ -1,12 +1,19 @@
+import 'package:do_it/homescreen.dart';
+import 'package:do_it/models.dart';
+import 'package:do_it/strategies/confidenceStrategy.dart';
+import 'package:do_it/strategies/overwhelmedStrategy.dart';
+import 'package:do_it/successScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'homescreen.dart';
-import 'strategies/overwhelmed/list.dart';
-
+const devTask = 'Develop an app with flutter';
 final menu = {
   'Homescreen': () => Homescreen(),
-  'Overwhelmed List': () => OverwhelmedListScreen(),
+  'Overwhelemed Strategy': () =>
+      OverwhelmedStrategy(task: OverwhelmedTask(devTask)),
+  'Confidence Strategy': () =>
+      ConfidenceStrategy(task: ConfidenceTask(devTask)),
+  'Success Screen': () => SuccessScreen(task: OverwhelmedTask(devTask)),
 };
 
 class Screens extends StatelessWidget {
