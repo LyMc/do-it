@@ -5,6 +5,7 @@ import '../theme.dart';
 import '../tasksController.dart';
 import '../shareable/screenTitle.dart';
 import '../shareable/yourTaskWell.dart';
+import '../shareable/appBar.dart';
 
 class DecisionScreen extends StatelessWidget {
   final TasksController _tasksController = Get.find();
@@ -27,9 +28,7 @@ class DecisionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Decision Tree"),
-        ),
+        appBar: getAppBar("Finding strategy"),
         body: Container(
             decoration: BoxDecoration(color: AppColors.purple),
             padding: const EdgeInsets.only(left: 20, right: 20),
