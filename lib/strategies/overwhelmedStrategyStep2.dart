@@ -55,9 +55,10 @@ class OverwhelmedStrategyStep2 extends StatelessWidget {
                                   child: ListTile(
                                     title: TextFormField(
                                       initialValue: subSubTask.value.name.value,
+                                      focusNode: subSubTask.value.focusNode,
                                       onChanged: (value) =>
                                           subSubTask.value.name.value = value,
-                                      autofocus: false,
+                                      autofocus: true,
                                       decoration: const InputDecoration(
                                         hintText: 'Enter a sub-task',
                                         enabledBorder: InputBorder.none,
@@ -78,6 +79,10 @@ class OverwhelmedStrategyStep2 extends StatelessWidget {
                               ),
                               onPressed: () {
                                 subTasksController.subTaskAdd(subTask);
+                                subTask.value.subTasks
+                                    .last()
+                                    .focusNode
+                                    .requestFocus();
                               },
                             ),
                         ],
