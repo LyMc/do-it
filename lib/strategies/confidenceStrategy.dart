@@ -43,23 +43,26 @@ class ConfidenceStrategy extends StatelessWidget {
       ),
       bottomNavigationBar: BottomAppBar(
         child: Padding(
-          padding: const EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.only(top: 10, right: 15, left: 15),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 15),
-                child: OutlineButton(
-                  onPressed: () => Get.to(AddTaskScreen()),
-                  child: Text("Add another task"),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: OutlineButton(
+                    onPressed: () => Get.to(AddTaskScreen()),
+                    child: Text("Add another task"),
+                  ),
                 ),
               ),
-              Obx(
+              Expanded(
+                  child: Obx(
                 () => RaisedButton(
                   onPressed: _hasUncompletedSteps ? null : _markAsResolved,
                   child: Text("Mark as resolved"),
                 ),
-              ),
+              )),
             ],
           ),
         ),

@@ -1,5 +1,7 @@
 import 'package:uuid/uuid.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class Task {
   String name;
@@ -31,15 +33,18 @@ class ConfidenceTask extends Task {
     Step(
         title: 'Build skill set',
         description:
-            'Write down the skills you need to complete this task. Acquire these skills and evaluate yourself. You can ask another person who masters these skills to help you.'),
+            'Write down the skills you need to complete this task. Acquire these skills and evaluate yourself. You can ask another person who masters these skills to help you.',
+        icon: MdiIcons.shieldStar),
     Step(
         title: 'Counter negative self-talk',
         description:
-            'Write down all your inner critic’s criticisms on one side of a piece of paper. Then write down a more realistic and compassionate appraisal of yourself on the other side. Challenging your inner critic helps stop the shame spiral that feeds into low self-esteem.'),
+            'Write down all your inner critic’s criticisms on one side of a piece of paper. Then write down a more realistic and compassionate appraisal of yourself on the other side. Challenging your inner critic helps stop the shame spiral that feeds into low self-esteem.',
+        icon: MdiIcons.accountVoice),
     Step(
         title: 'Acknolwdge small victories',
         description:
-            'Always remember to acknowledge how far you’ve come. Write down your small victories and get in the habit of celebrating each little win.')
+            'Always remember to acknowledge how far you’ve come. Write down your small victories and get in the habit of celebrating each little win.',
+        icon: MdiIcons.trophy),
   ];
   ConfidenceTask(String name) : super(name) {
     this.strategy = Strategy.confidence;
@@ -75,9 +80,10 @@ enum Strategy {
 class Step {
   final String title;
   final String description;
+  final IconData icon;
   var _isCompleted = false.obs;
 
-  Step({this.title, this.description});
+  Step({this.title, this.description, this.icon = MdiIcons.cog});
 
   get isCompleted {
     return this._isCompleted.value;

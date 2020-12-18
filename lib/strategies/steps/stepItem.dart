@@ -15,7 +15,7 @@ class StepItem extends StatelessWidget {
         child: Obx(
           () => CheckboxListTile(
             checkColor: Colors.black54,
-            secondary: Icon(Icons.wb_sunny),
+            secondary: Icon(this.step.icon),
             value: this.step.isCompleted,
             onChanged: (bool value) {
               this.step.toggleCompleted(value);
