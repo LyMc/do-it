@@ -95,9 +95,9 @@ class Step {
 }
 
 class SubTask {
-  var name = ''.obs;
-  var isCompleted = false.obs;
+  var name = '';
+  var isCompleted = false;
   FocusNode focusNode = new FocusNode();
-  // var deadline; // date?
+  DateTime deadline;
   var subTasks = <Rx<SubTask>>[].obs;
 }

@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 
 class OverwhelmedStrategy extends StatelessWidget {
   final OverwhelmedTask task;
-  final subTasksController = Get.put(SubTaskController());
 
   OverwhelmedStrategy({@required this.task});
 
@@ -42,8 +41,9 @@ class OverwhelmedStrategy extends StatelessWidget {
                 style: TextStyle(fontSize: 20),
               ),
               SizedBox(height: 20),
-              Obx(
-                () => Column(
+              GetX<SubTaskController>(
+                init: SubTaskController(),
+                builder: (subTasksController) => Column(
                   children: [
                     for (var subTask in subTasksController.subTasks)
                       Dismissible(
@@ -56,10 +56,10 @@ class OverwhelmedStrategy extends StatelessWidget {
                           color: Colors.transparent,
                           child: ListTile(
                             title: TextFormField(
-                              initialValue: subTask.value.name.value,
+                              initialValue: subTask.value.name,
                               focusNode: subTask.value.focusNode,
                               onChanged: (value) =>
-                                  subTask.value.name.value = value,
+                                  subTask.update((t) => t.name = value),
                               autofocus: true,
                               decoration: const InputDecoration(
                                 hintText: 'Enter a sub-task',
@@ -67,35 +67,31 @@ class OverwhelmedStrategy extends StatelessWidget {
                                 focusedBorder: InputBorder.none,
                               ),
                             ),
-                            // leading: Checkbox(
-                            //   value: true,
-                            //   onChanged: print,
-                            //   checkColor: Theme.of(context).cardColor,
-                            // ),
                           ),
                         ),
                       ),
                   ],
                 ),
               ),
-              Obx(
-                () => subTasksController.subTasks.length == 0 ||
-                        subTasksController
-                            .subTasks.last.value.name.value.isNotEmpty
-                    ? TextButton(
-                        child: Text(
-                          '+ Add new item',
-                          style: TextStyle(color: Colors.white54),
-                        ),
-                        onPressed: () {
-                          subTasksController.add();
-                          subTasksController.subTasks
-                              .last()
-                              .focusNode
-                              .requestFocus();
-                        },
-                      )
-                    : SizedBox(),
+              GetX<SubTaskController>(
+                builder: (subTasksController) =>
+                    subTasksController.subTasks.length == 0 ||
+                            subTasksController
+                                .subTasks.last.value.name.isNotEmpty
+                        ? TextButton(
+                            child: Text(
+                              '+ Add new item',
+                              style: TextStyle(color: Colors.white54),
+                            ),
+                            onPressed: () {
+                              subTasksController.add();
+                              subTasksController.subTasks
+                                  .last()
+                                  .focusNode
+                                  .requestFocus();
+                            },
+                          )
+                        : SizedBox(),
               ),
             ],
           ),

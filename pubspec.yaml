@@ -41,6 +41,9 @@ dependencies:
   # Material design icons
   material_design_icons_flutter: 4.0.5755
 
+  # Format DateTime as a relative time offset
+  date_time_format: ^1.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

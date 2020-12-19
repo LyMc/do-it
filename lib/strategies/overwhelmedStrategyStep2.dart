@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 
 class OverwhelmedStrategyStep2 extends StatelessWidget {
   final OverwhelmedTask task;
-  final subTasksController = Get.put(SubTaskController());
 
   OverwhelmedStrategyStep2({@required this.task});
 
@@ -28,67 +27,95 @@ class OverwhelmedStrategyStep2 extends StatelessWidget {
                 style: TextStyle(fontSize: 20),
               ),
               SizedBox(height: 20),
-              Obx(
-                () => Column(
-                  children: [
-                    for (var subTask in subTasksController.subTasks)
-                      Column(
-                        children: [
+              GetX<SubTaskController>(
+                builder: (subTasksController) {
+                  return Column(
+                    children: [
+                      for (var subTask in subTasksController.subTasks)
+                        if (subTask.value.name.isNotEmpty)
                           Card(
                             color: Colors.transparent,
-                            child: ListTile(
-                              title: Text(subTask.value.name.value),
-                            ),
-                          ),
-                          for (var subSubTask in subTask.value.subTasks)
-                            Padding(
-                              padding: const EdgeInsets.only(left: 20.0),
-                              child: Dismissible(
-                                key: Key(subSubTask.hashCode.toString()),
-                                onDismissed: (direction) {
-                                  subTasksController.subTaskRemove(
-                                      subTask, subSubTask);
-                                },
-                                background: Card(color: Colors.red),
-                                child: Card(
-                                  color: Colors.transparent,
-                                  child: ListTile(
-                                    title: TextFormField(
-                                      initialValue: subSubTask.value.name.value,
-                                      focusNode: subSubTask.value.focusNode,
-                                      onChanged: (value) =>
-                                          subSubTask.value.name.value = value,
-                                      autofocus: true,
-                                      decoration: const InputDecoration(
-                                        hintText: 'Enter a sub-task',
-                                        enabledBorder: InputBorder.none,
-                                        focusedBorder: InputBorder.none,
-                                      ),
-                                    ),
+                            child: Column(
+                              children: [
+                                ListTile(
+                                  title: Text(
+                                    subTask.value.name,
+                                    style: TextStyle(fontSize: 24),
                                   ),
                                 ),
-                              ),
+                                for (var subSubTask in subTask.value.subTasks)
+                                  Dismissible(
+                                    key: Key(subSubTask.hashCode.toString()),
+                                    onDismissed: (direction) {
+                                      subTasksController.subTaskRemove(
+                                          subTask, subSubTask);
+                                    },
+                                    background: Card(color: Colors.red),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.all(18),
+                                          child: Icon(Icons.circle, size: 10),
+                                        ),
+                                        Expanded(
+                                          child: TextFormField(
+                                            initialValue: subSubTask.value.name,
+                                            focusNode:
+                                                subSubTask.value.focusNode,
+                                            onChanged: (value) => subSubTask
+                                                .update((t) => t.name = value),
+                                            autofocus: true,
+                                            decoration: const InputDecoration(
+                                              hintText: 'Enter a sub-task',
+                                              enabledBorder: InputBorder.none,
+                                              focusedBorder: InputBorder.none,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                if (subTask.value.subTasks.length == 0 ||
+                                    subTask.value.subTasks.last.value.name
+                                        .isNotEmpty)
+                                  Row(
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.only(
+                                          top: 15,
+                                          left: 15,
+                                          bottom: 15,
+                                          right: 6,
+                                        ),
+                                        child: Icon(
+                                          Icons.add,
+                                          size: 16,
+                                          color: Colors.white54,
+                                        ),
+                                      ),
+                                      TextButton(
+                                        child: Text(
+                                          'Add new item',
+                                          style:
+                                              TextStyle(color: Colors.white54),
+                                        ),
+                                        onPressed: () {
+                                          subTasksController
+                                              .subTaskAdd(subTask);
+                                          subTask.value.subTasks
+                                              .last()
+                                              .focusNode
+                                              .requestFocus();
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                              ],
                             ),
-                          if (subTask.value.subTasks.length == 0 ||
-                              subTask.value.subTasks.last.value.name.value
-                                  .isNotEmpty)
-                            TextButton(
-                              child: Text(
-                                '+ Add new item',
-                                style: TextStyle(color: Colors.white54),
-                              ),
-                              onPressed: () {
-                                subTasksController.subTaskAdd(subTask);
-                                subTask.value.subTasks
-                                    .last()
-                                    .focusNode
-                                    .requestFocus();
-                              },
-                            ),
-                        ],
-                      ),
-                  ],
-                ),
+                          ),
+                    ],
+                  );
+                },
               ),
             ],
           ),
