@@ -10,10 +10,11 @@ class HateTaskDecisionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new DecisionScreen(
-        title: 'Do you hate this task?',
-        icon: MdiIcons.heartBroken,
-        onYes: () => Get.to(SuccessfulTaskDecisionScreen()),
-        noText: 'NOT REALLY',
-        onNo: () => Get.to(BeginTaskDecisionScreen()));
+      title: 'Do you hate this task?',
+      icon: MdiIcons.heartBroken,
+      onYes: () => Get.to(SuccessfulTaskDecisionScreen()),
+      noText: 'NOT REALLY',
+      onNo: () => Get.to(BeginTaskDecisionScreen()),
+    );
   }
 }

@@ -4,6 +4,7 @@ import 'package:do_it/strategies/overwhelmedDeadline.dart';
 import 'package:do_it/successScreen.dart';
 import 'package:do_it/tasksController.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 
 class OverwhelmedStrategyStep4 extends StatelessWidget {
@@ -38,6 +39,11 @@ class OverwhelmedStrategyStep4 extends StatelessWidget {
                             child: Column(
                               children: [
                                 ListTile(
+                                  onTap: () => subTask.update(
+                                    (t) {
+                                      t.isCompleted = !t.isCompleted;
+                                    },
+                                  ),
                                   leading: Checkbox(
                                     value: subTask.value.isCompleted,
                                     onChanged: (isChecked) => subTask.update(
@@ -60,63 +66,7 @@ class OverwhelmedStrategyStep4 extends StatelessWidget {
                                       ? OverwhelmedDeadline(subTask)
                                       : null,
                                 ),
-                                AnimatedContainer(
-                                  height: subTask.value.isCompleted
-                                      ? 0
-                                      : subTask.value.subTasks.length * 48.0,
-                                  curve: Curves.easeInOut,
-                                  duration: Duration(milliseconds: 400),
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      children: [
-                                        for (var subSubTask
-                                            in subTask.value.subTasks)
-                                          if (subSubTask.value.name.isNotEmpty)
-                                            Row(
-                                              children: [
-                                                Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                    horizontal: 16,
-                                                  ),
-                                                  child: Checkbox(
-                                                    value: subSubTask
-                                                        .value.isCompleted,
-                                                    onChanged: (isChecked) {
-                                                      subSubTask.update(
-                                                        (t) {
-                                                          t.isCompleted =
-                                                              isChecked;
-                                                        },
-                                                      );
-                                                      if (subTask.value.subTasks
-                                                          .every((t) => t.value
-                                                              .isCompleted)) {
-                                                        subTask.update((t) {
-                                                          t.isCompleted =
-                                                              isChecked;
-                                                        });
-                                                      }
-                                                    },
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  child: Text(
-                                                    subSubTask.value.name,
-                                                    style: TextStyle(
-                                                      decoration: subSubTask
-                                                              .value.isCompleted
-                                                          ? TextDecoration
-                                                              .lineThrough
-                                                          : TextDecoration.none,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                                subTasksList(subTask),
                               ],
                             ),
                           ),
@@ -132,10 +82,6 @@ class OverwhelmedStrategyStep4 extends StatelessWidget {
         child: ButtonBar(
           buttonMinWidth: 200.0, // half width
           children: [
-            OutlineButton(
-              child: Text('Previous'),
-              onPressed: () => Get.back(),
-            ),
             GetX<SubTaskController>(
               builder: (subTaskController) {
                 return RaisedButton(
@@ -152,4 +98,71 @@ class OverwhelmedStrategyStep4 extends StatelessWidget {
       ),
     );
   }
+
+  final subTasksList = (Rx<SubTask> subTask) => AnimatedContainer(
+        height: subTask.value.isCompleted
+            ? 0
+            : subTask.value.subTasks.length * 48.0,
+        curve: Curves.easeInOut,
+        duration: Duration(milliseconds: 400),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              for (var subSubTask in subTask.value.subTasks)
+                if (subSubTask.value.name.isNotEmpty)
+                  InkWell(
+                    onTap: () {
+                      subSubTask.update(
+                        (t) {
+                          t.isCompleted = !t.isCompleted;
+                        },
+                      );
+                      if (subTask.value.subTasks
+                          .every((t) => t.value.isCompleted)) {
+                        print('all');
+                        subTask.update((t) {
+                          t.isCompleted = !t.isCompleted;
+                        });
+                      }
+                    },
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16,
+                          ),
+                          child: Checkbox(
+                            value: subSubTask.value.isCompleted,
+                            onChanged: (isChecked) {
+                              subSubTask.update(
+                                (t) {
+                                  t.isCompleted = isChecked;
+                                },
+                              );
+                              if (subTask.value.subTasks
+                                  .every((t) => t.value.isCompleted)) {
+                                subTask.update((t) {
+                                  t.isCompleted = isChecked;
+                                });
+                              }
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            subSubTask.value.name,
+                            style: TextStyle(
+                              decoration: subSubTask.value.isCompleted
+                                  ? TextDecoration.lineThrough
+                                  : TextDecoration.none,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+            ],
+          ),
+        ),
+      );
 }

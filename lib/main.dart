@@ -5,7 +5,7 @@ import 'homescreen.dart';
 import 'screens.dart';
 import 'theme.dart';
 
-const dev = true;
+const dev = false;
 
 void main() => runApp(MyApp());
 

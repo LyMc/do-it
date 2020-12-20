@@ -125,10 +125,6 @@ class OverwhelmedStrategyStep2 extends StatelessWidget {
         child: ButtonBar(
           buttonMinWidth: 200.0, // half width
           children: [
-            OutlineButton(
-              child: Text('Previous'),
-              onPressed: () => Get.back(),
-            ),
             RaisedButton(
               onPressed: () => Get.to(OverwhelmedStrategyStep3(task: task)),
               child: Text("Next"),

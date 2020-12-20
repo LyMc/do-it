@@ -18,7 +18,7 @@ class OverwhelmedStrategy extends StatelessWidget {
       appBar: getAppBar('Overwhelmed Strategy'),
       body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(25),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -60,7 +60,6 @@ class OverwhelmedStrategy extends StatelessWidget {
                               focusNode: subTask.value.focusNode,
                               onChanged: (value) =>
                                   subTask.update((t) => t.name = value),
-                              autofocus: true,
                               decoration: const InputDecoration(
                                 hintText: 'Enter a sub-task',
                                 enabledBorder: InputBorder.none,
@@ -101,10 +100,6 @@ class OverwhelmedStrategy extends StatelessWidget {
         child: ButtonBar(
           buttonMinWidth: 200.0, // half width
           children: [
-            OutlineButton(
-              child: Text('Previous'),
-              onPressed: () => Get.back(),
-            ),
             RaisedButton(
               child: Text('Next'),
               onPressed: () => Get.to(OverwhelmedStrategyStep2(task: task)),

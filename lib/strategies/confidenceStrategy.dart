@@ -18,27 +18,38 @@ class ConfidenceStrategy extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: getAppBar('Confidence Strategy'),
-      body: Container(
-        padding: const EdgeInsets.only(left: 25, right: 25),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              headerImage,
-              ScreenTitle(title: 'Lack of Confidence'),
-              Text(
-                  "You lack confidence in your abilities, and this stops you from completing your task. Follow the steps we provide to boost your confidence. You can do it!"),
-              currentTask,
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: Text(
-                  "Steps",
-                  style: TextStyle(fontSize: 20),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(25),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 15),
+            Center(
+              child: Container(
+                width: 400,
+                height: 250,
+                child: Image(
+                  image: AssetImage('assets/lackOfConfidence.png'),
                 ),
               ),
-              StepList(steps: this.task.steps)
-            ],
-          ),
+            ),
+            ScreenTitle(title: 'Lack of Confidence'),
+            Text(
+              'You lack confidence in your abilities, and this stops you from '
+              'completing your task. Follow the steps we provide to boost your '
+              'confidence. You can do it!',
+            ),
+            Container(
+              margin: const EdgeInsets.only(bottom: 20, top: 15),
+              child: YourTaskWell(task: this.task),
+            ),
+            Text(
+              'Steps',
+              style: TextStyle(fontSize: 20),
+            ),
+            SizedBox(height: 10),
+            StepList(steps: this.task.steps)
+          ],
         ),
       ),
       bottomNavigationBar: BottomAppBar(
@@ -77,21 +88,5 @@ class ConfidenceStrategy extends StatelessWidget {
   void _markAsResolved() {
     this.task.markAsResolved();
     Get.off(SuccessScreen(task: this.task));
-  }
-
-  final headerImage = Container(
-    width: 400,
-    height: 250,
-    margin: const EdgeInsets.only(top: 40),
-    child: Image(
-      image: AssetImage('assets/lackOfConfidence.png'),
-    ),
-  );
-
-  Widget get currentTask {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 20, top: 15),
-      child: YourTaskWell(task: this.task),
-    );
   }
 }

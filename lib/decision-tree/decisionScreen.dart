@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../theme.dart';
 import '../tasksController.dart';
 import '../shareable/screenTitle.dart';
 import '../shareable/yourTaskWell.dart';
@@ -29,9 +28,8 @@ class DecisionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: getAppBar("Finding strategy"),
-        body: Container(
-            decoration: BoxDecoration(color: AppColors.purple),
-            padding: const EdgeInsets.only(left: 20, right: 20),
+        body: SingleChildScrollView(
+            padding: const EdgeInsets.all(20),
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
