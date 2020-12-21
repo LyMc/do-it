@@ -38,12 +38,6 @@ class TasksController extends GetxController {
 class SubTaskController extends GetxController {
   var subTasks = <Rx<SubTask>>[].obs;
 
-  // static SubTaskController get to => Get.find();
-
-  SubTaskController() {
-    add();
-  }
-
   add() {
     subTasks.add(SubTask().obs);
   }
@@ -58,5 +52,17 @@ class SubTaskController extends GetxController {
 
   subTaskRemove(Rx<SubTask> subTaskParent, subTask) {
     subTaskParent.value.subTasks.remove(subTask);
+  }
+
+  @override
+  void onInit() {
+    add();
+    super.onInit();
+  }
+
+  @override
+  void onClose() {
+    subTasks.clear();
+    super.onClose();
   }
 }
